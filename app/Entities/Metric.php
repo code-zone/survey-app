@@ -53,8 +53,12 @@ class Metric extends Model
      *
      * @author
      **/
-    public function score($project)
+    public function score($project, $user = null)
     {
-        return self::INDEX * ($this->ratings()->where('project_id', $project)->avg('rating') * $this->score_index);
+        return self::INDEX * ($this->ratings()
+                                    ->where('project_id', $project)
+                                    ->when($user, function ($query) use ($user) {
+                                        return $query->where('user_id', $user);
+                                    })->avg('rating') * $this->score_index);
     }
 }

@@ -130,8 +130,9 @@ class MetricsController extends Controller
      **/
     public function showConstraints(Metric $metric, Project $project)
     {
+        $user = auth()->user();
         $scores = $metric->scores()->orderBy('score', 'ASC')->get();
-        $ratings = Auth::user()->ratings()->where('metric_id', $metric->id)->where('project_id', $project->id)->get();
+        $ratings = $user->ratings()->where('metric_id', $metric->id)->where('project_id', $project->id)->get();
 
         return view('projects.voting', compact('scores', 'metric', 'ratings', 'project'));
     }
@@ -163,6 +164,6 @@ class MetricsController extends Controller
         }
         session()->put('message', 'Thank You for your particpation in this survey, You feedback is highly appreciated');
 
-        return back();
+        return redirect(request()->get('next'));
     }
 }

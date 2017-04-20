@@ -19,7 +19,7 @@
   var options = {
                     chart: {
                         renderTo: 'metrics-graph',
-                        type: 'areaspline',
+                        type: 'spline',
                     },
                     title: {
                         text: 'Mobile Social Software Learnability Index Evaluation',

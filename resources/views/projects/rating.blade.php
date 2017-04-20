@@ -24,7 +24,7 @@
 							</div>
 							<a href="{{ route('metric.constraints',['metric' => $metric->metric->id, 'project' => $project->id]) }}" md-ink-ripple class="md-btn md-raised md-fab pink m-r md-fab-offset pull-right" >
 						  			<span class="text-white">
-						  				{{number_format($metric->metric->score($project->id),1)}}
+						  				{{number_format($metric->metric->score($project->id, $user_id),1)}}
 						  			</span>
 						  		</a>
 							<div class="p">

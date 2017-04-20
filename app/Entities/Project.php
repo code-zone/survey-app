@@ -22,4 +22,18 @@ class Project extends Model
     {
         return $this->hasMany('App\Entities\ProjectMetric');
     }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public function nextPageUrl($key)
+    {
+        foreach ($this->metrics as $value) {
+            $urls[] = route('metric.constraints', [$value->metric_id, $value->project_id]);
+        }
+
+        return array_key_exists($key, $urls) ? $urls[$key] : url('dashboard');
+    }
 }

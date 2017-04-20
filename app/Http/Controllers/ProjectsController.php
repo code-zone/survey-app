@@ -50,6 +50,18 @@ class ProjectsController extends Controller
     }
 
     /**
+     * show view for editing a survey.
+     *
+     * @return Response
+     **/
+    public function startSurvey(Project $project)
+    {
+        if (session()->has()) {
+            return redirect($project->nextPageUlr(session('url')));
+        }
+    }
+
+    /**
      * Update the project in the database.
      *
      * @param Request $reques
@@ -121,11 +133,12 @@ class ProjectsController extends Controller
      *
      * @return Response description
      */
-    public function showMetrics($id)
+    public function showMetrics(Project $project)
     {
-        $project = $this->projects->with('metrics')->findOrFail($id);
+        $user = auth()->user();
+        $user_id = $user->hasRole('Admin') ? false : $user->id;
 
-        return view('projects.rating', compact('project'));
+        return view('projects.rating', compact('project', 'user_id'));
     }
 
     /**
