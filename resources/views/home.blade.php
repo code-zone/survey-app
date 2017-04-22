@@ -8,6 +8,7 @@
 		<div class="card-body">
 			<div id="graph" style="min-height: 450px;">
 				<div id="metrics-graph" style="height:400px" ></div>
+                <div id="metrics-graph2" style="height:400px" ></div>
 			</div>
 		</div>
 	</div>
@@ -18,8 +19,8 @@
 <script type="text/javascript">
   var options = {
                     chart: {
-                        renderTo: 'metrics-graph',
-                        type: 'spline',
+                        renderTo: '',
+                        type: 'column',
                     },
                     title: {
                         text: 'Mobile Social Software Learnability Index Evaluation',
@@ -34,7 +35,7 @@
                     },
                     tooltip: {
                         formatter: function() {
-                        return 'Ratting for ' + this.x + ' is <b>'+ this.y+'</b>'
+                        return this.x+' Ratting for ' + this.series.name + ' is <b>'+ ChartJS.numberFormat(this.y, 2)+'</b>'
                             }
                         },
                     plotOptions: {
@@ -48,7 +49,7 @@
                                 color: '#268d69',
                                 formatter: function() {
                                 return
-                                Highcharts.numberFormat(this.y, 0);
+                                ChartJS.numberFormat(this.y, 0);
                                 },
                                 x: 10,
                                 style: {
@@ -59,14 +60,18 @@
                         }
                     },
                     legend: {
-                        layout: 'vertical',
+                        layout: 'horizontal',
                         borderWidth: 1,
                         shadow: true
                     },
                     series: []
                 };
+                options.chart.renderTo = 'metrics-graph'
                 options.xAxis.categories = {!!json_encode($data['labels'])!!}
                 options.series = {!!json_encode($data['series'])!!}
+                chart = new ChartJS.Chart(options);
+                options.chart.renderTo = 'metrics-graph2'
+                options.series = {!!json_encode($data['series2'])!!}
                 chart = new ChartJS.Chart(options);
 </script>
 @endpush

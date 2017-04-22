@@ -6,10 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Metric extends Model
 {
-    /**
-     * Global metric for measurement.
-     **/
-    const INDEX = 4.149;
 
     /**
      * Fillable model fields.
@@ -31,7 +27,7 @@ class Metric extends Model
     /**
      * Metric Scores relation.
      *
-     * @return Illuminate\Database\Eloquent\HasManyRelation
+     * @return \Illuminate\Database\Eloquent\HasManyRelation
      **/
     public function scores()
     {
@@ -55,10 +51,13 @@ class Metric extends Model
      **/
     public function score($project, $user = null)
     {
-        return self::INDEX * ($this->ratings()
-                                    ->where('project_id', $project)
-                                    ->when($user, function ($query) use ($user) {
-                                        return $query->where('user_id', $user);
-                                    })->avg('rating') * $this->score_index);
+        $ratting = $this->ratings()
+            ->where('project_id', $project)
+            ->when($user, function ($query) use ($user) {
+                return $query->where('user_id', $user);
+            }, function ($query) {
+                return $query;
+            })->avg('rating');
+        return null == $ratting ? 0 : (double) $ratting * 7;
     }
 }

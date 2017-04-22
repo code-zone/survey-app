@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     /**
+     * Global metric for measurement.
+     **/
+    const INDEX = 4.149;
+    /**
      * undocumented class variable.
      *
      * @var string
@@ -28,12 +32,13 @@ class Project extends Model
      *
      * @author
      **/
-    public function nextPageUrl($key)
+    public function ratting($user = null)
     {
+        $rating = 0;
         foreach ($this->metrics as $value) {
-            $urls[] = route('metric.constraints', [$value->metric_id, $value->project_id]);
+            $rating += ($value->metric->score($this->id, $user) * $value->metric->score_index);
         }
 
-        return array_key_exists($key, $urls) ? $urls[$key] : url('dashboard');
+        return $rating > 0 ? $rating + self::INDEX : 0;
     }
 }

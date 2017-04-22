@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Metric;
 use App\Entities\Project;
 
 class HomeController extends Controller
@@ -9,9 +10,10 @@ class HomeController extends Controller
     /**
      * Create a new controller instance.
      */
-    public function __construct()
+    public function __construct(Project $surveys)
     {
         $this->middleware('auth');
+        $this->surveys = $surveys;
     }
 
     /**
@@ -21,22 +23,33 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Project $surveys)
+    public function index(Metric $metrics)
     {
         $data = [];
-        foreach ($surveys->all() as $survey) {
+        $user = auth()->user();
+        $user_id = $user->hasRole('Admin') ? false : $user->id;
+        foreach ($metrics->all() as $metric) {
             $score = [];
-            foreach ($survey->metrics as $metric) {
-                $score['labels'][] = $metric->metric->metric_name;
-                $score['data'][] = $metric->metric->score($survey->id);
+            foreach ($this->surveys->all() as $survey) {
+                $score['labels'][] = $survey->project_name;
+                $score['data'][] = $metric->score($survey->id, $user_id);
             }
             $data['labels'] = $score['labels'];
             $data['series'][] = [
-                'name' => $survey->project_name,
+                'name' => $metric->metric_name,
                 'data' => $score['data'],
             ];
         }
-
+        // Series 2
+        $rate = [];
+        foreach ($this->surveys->all() as $pr) {
+            $rate[] = $pr->ratting($user_id);
+        }
+        $data['series2'][] = [
+            'data' => $rate,
+            'name' => 'Overall',
+            'type' => 'area',
+        ];
         return view('home', compact('data'));
     }
 }

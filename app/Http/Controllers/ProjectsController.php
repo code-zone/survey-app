@@ -54,11 +54,13 @@ class ProjectsController extends Controller
      *
      * @return Response
      **/
-    public function startSurvey(Project $project)
+    public function startSurvey()
     {
-        if (session()->has()) {
-            return redirect($project->nextPageUlr(session('url')));
+        $url = resolve('url.generator')->build();
+        if ($url->current() !== null) {
+            return redirect($url->current());
         }
+        return redirect('home');
     }
 
     /**
@@ -70,7 +72,7 @@ class ProjectsController extends Controller
      **/
     public function update(Project $project, Request $request)
     {
-        $this->validate($request, ['project_name' => 'required|unique:projects,project_name,'.$project->id]);
+        $this->validate($request, ['project_name' => 'required|unique:projects,project_name,' . $project->id]);
         $project->update($request->all());
         $this->uploadFile($request, $project);
 

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
+use App\Entities\Constraint;
 use App\Entities\Metric;
 use App\Entities\Project;
+use App\Events\AddRatting;
+use Auth;
 use Illuminate\Http\Request;
-use App\Entities\Constraint;
 
 class MetricsController extends Controller
 {
@@ -19,6 +20,7 @@ class MetricsController extends Controller
     {
         $this->middleware('auth');
         $this->metrics = $metrics;
+        $this->url = resolve('url.generator')->build();
     }
 
     /**
@@ -163,7 +165,12 @@ class MetricsController extends Controller
             $metric->ratings()->create(['user_id' => Auth::user()->id, 'constraint_id' => $key, 'rating' => $value, 'project_id' => $survey]);
         }
         session()->put('message', 'Thank You for your particpation in this survey, You feedback is highly appreciated');
+        $url = $this->url->next();
+        if (!$this->url->valid()) {
+            $this->url->rewind();
+        }
+        event(new AddRatting($metric, Project::find($survey)));
 
-        return redirect(request()->get('next'));
+        return redirect($url);
     }
 }

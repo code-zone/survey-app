@@ -16,8 +16,8 @@
 		<link rel="shortcut icon" href="{{asset('images/favicon.ico')}}">
 
 		<!-- Web Fonts -->
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700,300&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-		<link href='http://fonts.googleapis.com/css?family=Raleway:700,400,300' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700,300&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Raleway:700,400,300' rel='stylesheet' type='text/css'>
 
 		<!-- Bootstrap core CSS -->
 		<link href="{{asset('bootstrap/css/bootstrap.css')}}" rel="stylesheet">
@@ -45,7 +45,7 @@
 		<div class="scrollToTop"><i class="icon-up-open-big"></i></div>
 
 			@yield('content')
-
+		<footer id="footer">
 			<!-- .subfooter start -->
 			<!-- ================ -->
 			<div class="subfooter">

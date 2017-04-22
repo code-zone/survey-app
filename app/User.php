@@ -79,4 +79,16 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Timeline');
     }
+
+    /**
+     * undocumented function summary.
+     *
+     * Undocumented function long description
+     *
+     * @param type var Description
+     **/
+    public function self(User $user)
+    {
+        return $user->id === $this->id;
+    }
 }//end class

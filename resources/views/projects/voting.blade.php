@@ -5,6 +5,10 @@
 				<span class="card-title">{{$metric->metric_name}} Assessment</span>
 			</div>
 			<div class="card-body">
+			<p>
+				<strong>Give us your feedback on {{$project->project_name}} based on {{$metric->metric_name}} Assessment</strong>
+
+			</p>
 				@if(session()->has('message'))
 					<div class="alert alert-success">
 						<p>
@@ -15,6 +19,7 @@
 				<div class="row table-responsive">
 				<form method="post" action="{{ route('metric.constraints.save', $metric->id) }}">
 				{{csrf_field()}}
+				b4
 				<input type="hidden" name="project_id" value="{{$project->id}}">
 				<table class="table table-striped">
 					<thead>
@@ -30,7 +35,7 @@
 							@foreach($scores as $score)
 							<td>
 								<label class="md-switch">
-						            <input type="radio" value="{{$score->score}}" name='constraints[{{$constraint->id}}]'" required="" {{$ratings->where('constraint_id', $constraint->id)->where('rating', $score->score)->count() ==1 ? 'checked' : '' }}>
+						            <input type="radio" value="{{$score->score}}" name="constraints[{{$constraint->id}}]'" required="" {{$ratings->where('constraint_id', $constraint->id)->where('rating', $score->score)->count() ==1 ? 'checked' : '' }}>
 						            <i class="pink"></i>
 						         </label>
 							</td>

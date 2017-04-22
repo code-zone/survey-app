@@ -13,7 +13,7 @@
                             <h2 class="text-center">Get answers with the world’s leading survey platform <span>MSSLI</span></h2>
                             <p class="lead text-center">Give yourself and the rest of your team the answers you need to make smarter decisions. Use our robust analytics to make data-driven decisions. Get responses in real time, slice and dice data to reveal insights, and easily share presentation-ready charts and reports. </p>
                             <div class="text-center scrollspy smooth-scroll">
-                                <a href="#register" class="btn btn-primary">Get Started</a>
+                                <a href="#register" style="background: rgba(0,0,0, 0.0);" class="btn btn-default">Get Started</a>
                             </div>
 
                         </div>

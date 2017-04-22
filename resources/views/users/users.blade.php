@@ -61,6 +61,10 @@ function color_pane()
                             <i class="fa fa-ellipsis-v fa-lg"></i>
                         </button>
                         <ul class="dropdown-menu">
+                          <li>
+                                  <a href="{{ route('users.show', $user->id) }}"><i class="mdi-content-add"></i> 
+                                      &nbsp; View</a>
+                             </li>
                              <li>
                                   <a href="{{ route('users.edit', $user->id) }}"><i class="mdi-content-create"></i> 
                                       &nbsp; Edit</a>

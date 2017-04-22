@@ -51,8 +51,7 @@ class UserEventSubscriber
      */
     public function onUserLogout($event)
     {
-        $event->user->log()->create(
-                [
+        $event->user->log()->create([
                 'icon' => 'fa fa-sign-out',
                 'type' => 'primary',
                 'group' => 'auth',
@@ -60,11 +59,25 @@ class UserEventSubscriber
                 'details' => 'Logged out of this account',
                 'ip' => request()->server->get('REMOTE_ADDR'),
                 'user_agent' => request()->server->get('HTTP_USER_AGENT'),
-        ]
-        );
+                ]);
     }
 
-//end onUserLogout()
+    /**
+     * Handle metric ratting events.
+     */
+    public function onMetricRating($event)
+    {
+        $data = [
+             'icon' => 'fa fa-plus',
+             'type' => 'teal',
+             'group' => 'survey',
+                'title' => $event->survey->project_name.' survey',
+                'details' => 'Submited '.$event->metric->metric_name.' rating for '.$event->survey->project_name.' survey',
+                'ip' => request()->server->get('REMOTE_ADDR'),
+                'user_agent' => request()->server->get('HTTP_USER_AGENT'),
+            ];
+        $this->logActivity($data);
+    }
 
     /**
      * Log Writer.
@@ -76,7 +89,7 @@ class UserEventSubscriber
     protected function logActivity(array $data)
     {
         if (auth()->check()) {
-            user()->log()->create($data);
+            auth()->user()->log()->create($data);
         }
     }
 
@@ -102,6 +115,10 @@ class UserEventSubscriber
         $events->listen(
             'Illuminate\Auth\Events\Failed',
             __CLASS__.'@onFailedLogin'
+        );
+        $events->listen(
+            'App\Events\AddRatting',
+            __CLASS__.'@onMetricRating'
         );
     }
 

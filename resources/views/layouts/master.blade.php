@@ -30,7 +30,7 @@
         <div class="navbar md-whiteframe-z1 no-radius blue">
             <!-- brand -->
             <a class="navbar-brand" href="{{url('/')}}">
-              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve" style="
+              <svg version="1.1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve" style="
                     width: 24px; height: 24px;">
                   <path d="M 50 0 L 100 14 L 92 80 Z" fill="rgba(139, 195, 74, 0.5)"></path>
                   <path d="M 92 80 L 50 0 L 50 100 Z" fill="rgba(139, 195, 74, 0.8)"></path>
@@ -47,6 +47,7 @@
             <div class="box-inner">
               <div class="p hidden-folded blue-50" style="background-size:cover">
                 <div class="rounded w-64 bg-white inline pos-rlt">
+                  <img src=" {{asset('images/avatar1.jpg')}}" class="img-responsive rounded">
                 </div>
                 <a class="block m-t-sm">
                   <span class="block font-bold">{{auth()->user()->name}}</span>
@@ -60,7 +61,7 @@
         <nav>
           <ul class="nav b-t b">
             <li>
-              <a href="http://themeforest.net/item/materil-responsive-admin-dashboard-template/11062969" target="_blank" md-ink-ripple>
+              <a href="https://themeforest.net/item/materil-responsive-admin-dashboard-template/11062969" target="_blank" md-ink-ripple>
                 <i class="icon mdi-action-help i-20"></i>
                 <span>Help &amp; Feedback</span>
               </a>

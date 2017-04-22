@@ -14,7 +14,7 @@ class UsersController extends Controller
      */
     public function __construct(User $user)
     {
-        $this->middleware(['auth', 'needsRole:Admin']);
+        $this->middleware(['auth', 'needsRole:Admin'])->except(['show', 'editProfile', 'updateAbout', 'updateProfile']);
         $this->users = $user;
     }
 
@@ -72,6 +72,7 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
+        return view('users.Profile', compact('user'));
     }
 
     /**
