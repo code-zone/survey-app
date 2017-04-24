@@ -14,11 +14,14 @@
 // Frontend Routes
 Route::get('/', 'SiteController@home');
 Route::get('contact', 'SiteController@contactUs');
+Route::post('send-feedback', 'SiteController@sendFeedback');
 Auth::routes();
 // Backend Routes
 Route::resource('metrics', 'MetricsController');
 Route::resource('projects', 'ProjectsController');
 Route::resource('users', 'UsersController');
+Route::resource('settings', 'SettingsController');
+Route::get('analytics', ['middleware' => 'needsRole:Admin', 'uses' => 'AnalyticsController@index']);
 Route::get('users/block/{user}', ['as' => 'users.block', 'uses' => 'UsersController@block']);
 Route::get('users/unblock/{user}', ['as' => 'users.unblock', 'uses' => 'UsersController@unblock']);
 Route::post(
@@ -107,7 +110,7 @@ Route::get(
     ]
 );
 Route::get(
-    'projects/start-survey',
+    'project/start-survey',
     [
         'as' => 'project.start_survey',
         'uses' => 'ProjectsController@startSurvey',

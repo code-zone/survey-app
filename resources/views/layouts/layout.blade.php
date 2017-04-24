@@ -24,6 +24,7 @@
 
 		<!-- Font Awesome CSS -->
 		<link href="{{asset('fonts/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
+		<link rel="stylesheet" href="{{asset('libs/select2/select2.min.css')}}" type="text/css" />
 
 		@stack('css')
 	</head>
@@ -77,7 +78,8 @@
 
 		<!-- Initialization of Plugins -->
 		<script type="text/javascript" src="{{asset('js/template.js')}}"></script>
-
+		
+		<script src="{{asset('libs/select2/select2.full.min.js')}}"></script>
 		<!-- Custom Scripts -->
 		<script type="text/javascript" src="{{asset('js/custom.js')}}"></script>
 		@stack('js-scripts')

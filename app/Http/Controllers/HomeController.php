@@ -49,7 +49,7 @@ class HomeController extends Controller
         $data['series2'][] = [
             'data' => $rate['data'],
             'name' => 'Overall',
-            'type' => 'areaspline',
+            'type' => 'column',
         ];
         $data['rates'] = $rate;
 

@@ -1,0 +1,128 @@
+@extends('layouts.master')
+
+@section('content')
+	<div class="card">
+		<div class="card-heading">
+			<span class="card-title"></span>
+		</div>
+		<div class="card-body">
+            <form class="form-inline">
+                <div class="col-sm-8">
+                    <div class="form-group {{ $errors->has('age') ? ' has-error' : '' }}">
+                                        <label class="sr-only" for="password">Age</label>
+                                        <select name="age" class="select2">
+                                            <optgroup label="Age Ranges">
+                                                <option value="10">10 to 20 Years</option>
+                                                <option value="20">21 to 40 Years</option>
+                                                <option value="40">41 to 60 Years</option>
+                                                <option value="60">60+ Years</option>   
+                                            </optgroup>
+                                        </select>
+                                         {!! $errors->first('age', '<span class="help-block">:message</span>') !!}
+                                    </div>
+                </div>
+                <div class="col-sm4">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+            </form>
+			<div style="min-height: 450px;">
+				<div id="metrics-graph" style="height:400px" ></div>
+			</div>
+            <hr>
+            <div style="min-height: 450px;">
+
+                <div id="metrics-graph2" style="height:400px" ></div>
+			</div>
+            
+		</div>
+	</div>
+    <div class"row">
+    @foreach($data['rates']['name'] as $key => $survey)
+     <div class="col-md-4">
+        <div class="panel no-border panel-primary">
+            <div class="panel-heading">
+                <span class="font-bold">{{$survey}}</span>
+                @php
+                   $per = $data['rates']['data'][$key] / 57.572 * 100;
+                   $rate = ratting($per);
+                @endphp
+            </div>
+            <div class="panel-body">
+                <center>
+                    <div ui-jp="easyPieChart" ui-options="{
+                            percent: {{$per}},
+                            lineWidth: 3,
+                            trackColor: '#f1f2f3',
+                            barColor: '{{$rate['bg']}}',
+                            scaleColor: '#f1f2f3',
+                            size: 160,
+                            lineCap: 'butt'
+                        }">
+                        <div>
+                            {{number_format($per)}}%
+                        </div>
+                    </div>
+                </center>
+                <div class="text-center">
+                   <span class="text-{{$rate['color']}}"><strong>{{$rate['rate']}}</strong></span> 
+                </div>
+            </div>
+        </div>
+    </div>
+    @endforeach
+    </div>
+@endsection
+@push('scripts')
+<script src="{{asset('js/chart.js')}}"></script>
+
+<script type="text/javascript">
+  var options = {
+                    chart: {
+                        renderTo: '',
+                        type: 'column',
+                    },
+                    title: {
+                        text: '',
+                    },
+                    xAxis: {
+                        categories: []
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Ratting'
+                        }
+                    },
+                    tooltip: {
+                        formatter: function() {
+                            return this.x+' Ratting for ' + this.series.name + ' is <b>'+ ChartJS.numberFormat(this.y, 2)+'</b>'
+                        }
+                    },
+                    legend: {
+                        layout: 'horizontal',
+                        borderWidth: 1,
+                        shadow: true
+                    },
+                    credits: {
+                        position: {
+                            align: 'left',
+                            x: 20
+                        },
+                        href: 'http://github.com/code-zone/survey-app',
+                        text: 'Mobile Software Learnabiity Index'
+                    },
+                    series: []
+                };
+                options.chart.renderTo = 'metrics-graph'
+                options.xAxis.categories = {!!json_encode($data['labels'])!!}
+                options.series = {!!json_encode($data['series'])!!}
+                chart = new ChartJS.Chart(options);
+                options.chart.renderTo = 'metrics-graph2'
+                options.series = {!! json_encode($data['series2']) !!}
+                options.legend.enabled = false
+                options.title.text = 'Mobile Social Software Learnability Index Evaluation'
+                chart = new ChartJS.Chart(options);
+</script>
+        <script>
+           $('.select2').select2({width:"100%"})
+        </script>
+    @endpush

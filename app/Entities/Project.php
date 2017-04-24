@@ -9,7 +9,7 @@ class Project extends Model
     /**
      * Global metric for measurement.
      **/
-    const INDEX = 4.149;
+    const INDEX = 5.912;
     /**
      * undocumented class variable.
      *
@@ -37,6 +37,21 @@ class Project extends Model
         $rating = 0;
         foreach ($this->metrics as $value) {
             $rating += ($value->metric->score($this->id, $user) * $value->metric->score_index);
+        }
+
+        return $rating > 0 ? $rating + self::INDEX : 0;
+    }
+
+    /**
+     * undocumented function.
+     *
+     * @author
+     **/
+    public function rattingByAge($age = null)
+    {
+        $rating = 0;
+        foreach ($this->metrics as $value) {
+            $rating += ($value->metric->scoreByAge($this->id, $age) * $value->metric->score_index);
         }
 
         return $rating > 0 ? $rating + self::INDEX : 0;

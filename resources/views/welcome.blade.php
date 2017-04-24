@@ -68,12 +68,24 @@
                                         <i class="fa fa-key form-control-feedback"></i>
                                          {!! $errors->first('password', '<span class="help-block">:message</span>') !!}
                                     </div>
+                                    <div class="form-group {{ $errors->has('age') ? ' has-error' : '' }}">
+                                        <label class="sr-only" for="password">Age</label>
+                                        <select name="age" class="select2">
+                                            <optgroup label="Age Ranges">
+                                                <option value="10">10 to 20 Years</option>
+                                                <option value="20">21 to 40 Years</option>
+                                                <option value="40">41 to 60 Years</option>
+                                                <option value="60">60+ Years</option>   
+                                            </optgroup>
+                                        </select>
+                                         {!! $errors->first('age', '<span class="help-block">:message</span>') !!}
+                                    </div>
                                     <div class="form-group has-feedback {{ $errors->has('password') ? ' has-error' : '' }}">
                                         <label class="sr-only">Confirm Password</label>
                                         <input type="password" class="form-control" placeholder="Confirm Password" name="password_confirmation">
                                         <i class="fa fa-key form-control-feedback"></i>
                                          
-                                    </div>
+                                    </div>{{ $errors->has('name') ? ' has-error' : '' }}
                                 <input type="submit" value="Register" class="btn btn-success pull-right">
                             </form>
                         </div>
@@ -84,3 +96,8 @@
     </footer>
             <!-- .footer end -->
     @endsection
+    @push('js-scripts')
+        <script>
+           $('.select2').select2({width:"100%"})
+        </script>
+    @endpush

@@ -27,7 +27,7 @@
                       </a>
                     </li>
                     <li>
-                      <a md-ink-ripple href="ui.chart.html">
+                      <a md-ink-ripple href="{{url('analytics')}}">
                         <i class="icon mdi-device-multitrack-audio i-20"></i>
                         <span class="font-normal">Analytics</span>
                       </a>

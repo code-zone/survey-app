@@ -18,10 +18,10 @@ if (!function_exists('ratting')) {
                 return ['color' => 'success-dk', 'rate' => 'Excellent', 'bg' => '#3fa343'];
                 break;
             case $value >= 60:
-                return ['color' => 'primary-dk', 'rate' => 'Very Good', 'bg' => '#3345a8'];
+                return ['color' => 'primary-dk', 'rate' => 'Good', 'bg' => '#3345a8'];
                 break;
             case $value >= 40:
-                return ['color' => 'info-dk', 'rate' => 'Good', 'bg' => '#078bf4'];
+                return ['color' => 'info-dk', 'rate' => 'Average', 'bg' => '#078bf4'];
                 break;
             case $value >= 20:
                 return ['color' => 'warning-dk', 'rate' => 'Fair', 'bg' => '#ecb100'];

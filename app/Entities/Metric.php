@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Metric extends Model
 {
-
     /**
      * Fillable model fields.
      *
@@ -58,6 +57,26 @@ class Metric extends Model
             }, function ($query) {
                 return $query;
             })->avg('rating');
-        return null == $ratting ? 0 : (double) $ratting * 7;
+
+        return null == $ratting ? 0 : (float) $ratting * 7;
+    }
+
+    /**
+     * Calculate Metrics.
+     *
+     * @author
+     **/
+    public function scoreByAge($project, $age = null)
+    {
+        $ratting = $this->ratings()
+            ->join('metrics', 'metrics.id', '=', 'ratings.metric_id')
+            ->join('users', 'users.id', '=', 'ratings.user_id')
+            ->where('ratings.project_id', $project)
+            ->when($age, function ($query) use ($age) {
+                return $query->where('users.age', $age);
+            })
+             ->avg('ratings.rating');
+
+        return null == $ratting ? 0 : (float) $ratting * 7;
     }
 }

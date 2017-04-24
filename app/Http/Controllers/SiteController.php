@@ -16,7 +16,7 @@ class SiteController extends Controller
      **/
     public function __construct()
     {
-        $this->middleware('guest');
+        //$this->middleware('guest');
     }
 
     /**
@@ -44,26 +44,30 @@ class SiteController extends Controller
     }
 
     /**
-     * undocumented function summary.
+     * @POST('send-feedback')
      *
-     * Undocumented function long description
+     * Send user feedback notification
      *
-     * @param type var Description
+     * @param Illuminate\Http\Request $request current request instance
      **/
     public function sendFeedback(Request $request)
     {
         $this->validate($request, ['name' => 'required', 'email' => 'required|email', 'message' => 'required']);
-       // Notify user that their feedback hass been received
-        resolve('Illuminate\Contracts\Mail\Mailer')
-        ->to($request->get('email'), $request->get('name'))
-        ->subject('Your Feedback Has Been Received')
-        ->send(new FeedbackSent($request));
-        // Send User feedback to site admin
-        resolve('Illuminate\Contracts\Mail\Mailer')
-        ->to(env('ADMIN_EMAIL', 'wizqydy@gmail.com'), env('ADMIN_NAME', 'The Weezqyd'))
-        ->subject('New User Feedback')
-        ->send(new FeedbackReceived($request));
-        $request->session()->flash('response', 'Your Feedback Has Been Received');
+        try {
+            // Notify user that their feedback hass been received
+            resolve('Illuminate\Contracts\Mail\Mailer')
+            ->to($request->get('email'), $request->get('name'))
+            ->send((new FeedbackSent($request))->subject('Your Feedback Has Been Received'));
+            // Send User feedback to site admin
+            resolve('Illuminate\Contracts\Mail\Mailer')
+            ->to(env('ADMIN_EMAIL', 'wizqydy@gmail.com'), env('ADMIN_NAME', 'The Weezqyd'))
+            ->send((new FeedbackReceived($request))->subject('New User Feedback'));
+            $request->session()->flash('response', 'Your Feedback Has Been Received');
+        } catch (\Swift_TransportException $e) {
+            $request->session()->flash('error', 'Failed to send your feedback, please check if your have an active internet connection');
+
+            return back()->withInput();
+        }
 
         return back();
     }
