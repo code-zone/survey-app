@@ -51,9 +51,9 @@
                                         <!-- Collect the nav links, forms, and other content for toggling -->
                                         <div class="collapse navbar-collapse scrollspy smooth-scroll" id="navbar-collapse-1">
                                             <ul class="nav navbar-nav navbar-right">
-                                                <li class="active"><a href="#banner">Home</a></li>
-                                                <li><a href="#register">Create Account</a></li>
-                                                <li><a href="{{url('login')}}">Sign In</a></li>
+                                                <li class="{{isActive('/')}}"><a href="{{url('/')}}">Home</a></li>
+                                                <li  class="{{isActive('contact')}}"><a href="{{url('contact')}}">About</a></li>
+                                                <li  class="{{isActive('login')}}"><a href="{{url('login')}}">Sign In</a></li>
                                             </ul>
                                         </div>
 
@@ -71,3 +71,13 @@
                 </div>
             </div>
         </header>
+        @push('css')
+        <!-- Plugins -->
+		<link href="{{asset('css/animations.css')}}" rel="stylesheet">
+
+		<!-- Worthy core CSS file -->
+		<link href="{{asset('css/style.css')}}" rel="stylesheet">
+
+		<!-- Custom css --> 
+		<link href="{{asset('css/custom.css')}}" rel="stylesheet">
+        @endpush

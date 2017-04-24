@@ -1,7 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.layout')
 
 @section('content')
+<!-- header start -->
+    @include('navigation.navigation')
+<div class="space"></div>
 <div class="container">
+<div class="space"></div>
     <div class="row">
         <div class="col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4" style="margin-top:8.5%;">
             <div class="panel panel-default">

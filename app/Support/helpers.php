@@ -32,3 +32,36 @@ if (!function_exists('ratting')) {
         }
     }
 }
+if (!function_exists('isActive')) {
+    /**
+     * Set the active class to the current opened menu.
+     *
+     * @param string|array $route
+     * @param string       $className
+     *
+     * @return string
+     */
+    function isActive($route, $className = 'active')
+    {
+        $check = function ($route) use ($className) {
+            if (request()->path() == $route) {
+                return $className;
+            }
+            if (request()->is($route)) {
+                return $className;
+            }
+        };
+        if (is_array($route)) {
+            foreach ($route as $value) {
+                $test = $check($value);
+                if ($test != null) {
+                    return $test;
+                }
+            }
+
+            return;
+        }
+
+        return $check($route);
+    }//end isActive()
+}//end if

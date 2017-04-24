@@ -25,14 +25,7 @@
 		<!-- Font Awesome CSS -->
 		<link href="{{asset('fonts/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
 
-		<!-- Plugins -->
-		<link href="{{asset('css/animations.css')}}" rel="stylesheet">
-
-		<!-- Worthy core CSS file -->
-		<link href="{{asset('css/style.css')}}" rel="stylesheet">
-
-		<!-- Custom css --> 
-		<link href="{{asset('css/custom.css')}}" rel="stylesheet">
+		@stack('css')
 	</head>
 	<script>
         window.Laravel = {!! json_encode([
