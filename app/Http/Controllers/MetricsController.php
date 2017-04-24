@@ -164,7 +164,7 @@ class MetricsController extends Controller
         foreach (request()->get('constraints') as $key => $value) {
             $metric->ratings()->create(['user_id' => Auth::user()->id, 'constraint_id' => $key, 'rating' => $value, 'project_id' => $survey]);
         }
-        session()->put('message', 'Thank You for your particpation in this survey, You feedback is highly appreciated');
+        session()->flash('message', 'Thank You for your particpation in this survey, You feedback is highly appreciated');
         $url = $this->url->next();
         if (!$this->url->valid()) {
             $this->url->rewind();

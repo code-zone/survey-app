@@ -2,6 +2,8 @@
 
 namespace App\Listeners;
 
+use App\Events\AddRatting;
+
 class UserEventSubscriber
 {
     /**
@@ -65,7 +67,7 @@ class UserEventSubscriber
     /**
      * Handle metric ratting events.
      */
-    public function onMetricRating($event)
+    public function onMetricRating(AddRatting $event)
     {
         $data = [
              'icon' => 'fa fa-plus',

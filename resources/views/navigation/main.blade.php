@@ -33,12 +33,13 @@
                       </a>
                     </li>
                     <li class="b-b b m-v-sm"></li>
+                    @endis
                     <li>
-                      <a md-ink-ripple ui-toggle-class="hide, show" target="#nav, #account">
-                        <span>Settings</span>
+                      <a md-ink-ripple href="{{route('users.show', Auth::user()->id)}}">
+                        <i class="icon mdi-action-perm-identity i-20"></i>
+                        <span class="font-normal">Profile</span>
                       </a>
                     </li>
-                    @endis
                   </ul>
                 </nav>
               </div>

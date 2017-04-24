@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Entities\Metric;
+use App\Entities\Project;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -12,10 +14,12 @@ class UsersController extends Controller
      *
      * @param User $user User model
      */
-    public function __construct(User $user)
+    public function __construct(User $user, Project $survey, Metric $metrics)
     {
         $this->middleware(['auth', 'needsRole:Admin'])->except(['show', 'editProfile', 'updateAbout', 'updateProfile']);
         $this->users = $user;
+        $this->metrics = $metrics;
+        $this->surveys = $survey;
     }
 
     /**
@@ -72,7 +76,31 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
-        return view('users.Profile', compact('user'));
+        $data = [];
+        foreach ($this->metrics->all() as $metric) {
+            $score = [];
+            foreach ($this->surveys->all() as $survey) {
+                $score['labels'][] = $survey->project_name;
+                $score['data'][] = $metric->score($survey->id, $user->id);
+            }
+            $data['labels'] = $score['labels'];
+            $data['series'][] = [
+                'name' => $metric->metric_name,
+                'data' => $score['data'],
+            ];
+        }
+        // Series 2
+        $rate = [];
+        foreach ($this->surveys->all() as $pr) {
+            $rate[] = $pr->ratting($user->id);
+        }
+        $data['series2'][] = [
+            'data' => $rate,
+            'name' => 'Overall',
+            'type' => 'areaspline',
+        ];
+
+        return view('users.Profile', compact('user', 'data'));
     }
 
     /**

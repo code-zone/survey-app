@@ -19,7 +19,6 @@
 				<div class="row table-responsive">
 				<form method="post" action="{{ route('metric.constraints.save', $metric->id) }}">
 				{{csrf_field()}}
-				b4
 				<input type="hidden" name="project_id" value="{{$project->id}}">
 				<table class="table table-striped">
 					<thead>
@@ -36,7 +35,7 @@
 							<td>
 								<label class="md-switch">
 						            <input type="radio" value="{{$score->score}}" name="constraints[{{$constraint->id}}]'" required="" {{$ratings->where('constraint_id', $constraint->id)->where('rating', $score->score)->count() ==1 ? 'checked' : '' }}>
-						            <i class="pink"></i>
+						            <i class="teal"></i>
 						         </label>
 							</td>
 							@endforeach
@@ -44,7 +43,7 @@
 						@endforeach
 						<tr>
 							<td colspan="{{count($scores)+1}}">
-								<button type="submit" class="btn pink pull-right">Submit Results</button>
+								<button type="submit" class="md-btn md-raised m-b btn-fw teal waves-effect pull-right"> Submit Your Feedback </button>
 							</td>
 						</tr>
 					</tbody>

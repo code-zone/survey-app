@@ -16,13 +16,13 @@
       <div class="list-group no-radius no-border">
         @foreach(App\Entities\Project::all() as $survey)
             <a class="list-group-item">
-          <span class="pull-right badge">{{number_format($survey->ratting($user->id))}}</span> {{$survey->project_name}}
+          <span class="pull-right badge teal">{{number_format($survey->ratting($user->id))}}</span> {{$survey->project_name}}
         </a>
         @endforeach
       </div>
       <div class="p">
         <p>About</p>
-        <p>Lorem ipsum dolor sit amet, consecteter adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet. </p>
+        <p>{{ $user->about }}</p>
         <div class="m-v">
           <a class="text-muted">
             <i class="fa ui-icon fa-facebook"></i>
@@ -54,43 +54,102 @@
     </div>
     <div class="panel panel-card clearfix">
       <div class="p-h b-b b-light">
-        <ul class="nav nav-lines nav-md b-info">
-          <li class="active"><a href>Stream</a></li>
-          <li><a href>Photos <span class="badge">3</span></a></li>
-          <li><a href>Posts <span class="badge">9</span></a></li>
+        <ul class="nav nav-lines nav-tabs nav-justified nav-md b-info">
+          <li class="active"><a data-toggle="tab" data-target="#timeline" >User Activity</a></li>
+          <li><a data-toggle="tab" data-target="#feedback">Survey Feedback</a></li>
         </ul>
       </div>
-      <div class="p-h-lg m-b-lg">      
-        <div class="streamline b-l p-v m-l-xs">
-        @forelse ($user->log()->orderBy('created_at', 'DESC')->take(10)->get() as $log)
-             <div>
-            <a class="pull-left w-32 m-l-n m-t-xs m-r">
-              <img src="{{asset('images/avatar1.jpg')}}" class="img-responsive rounded" alt="...">
-            </a>
-            <div class="clear">
-              <div class="m-b-xs">
-                {{$log->title}}
-                <span class="text-muted block text-xs">
-                  {{$log->created_at->diffForHumans()}}
-                </span>
-              </div>
-              <div class="m-b">
-                <div>{{ $log->details }}</div>
-                <div class="m-t-sm">
-                  <a href class="text-muted m-xs">{{$log->ip}}</a>
-                  <a href class="text-muted m-xs">{{$log->user_agent}}</a>
+      <div class="tab-content p-h-lg m-b-lg">      
+          <div id="timeline" class="active tab-pane animated fadeInDown streamline b-l p-v m-l-xs">
+              @forelse ($user->log()->orderBy('created_at', 'DESC')->take(10)->get() as $log)
+                <div>
+                <a class="pull-left w-32 m-l-n m-t-xs m-r">
+                  <img src="{{asset('images/avatar1.jpg')}}" class="img-responsive rounded" alt="...">
+                </a>
+                <div class="clear">
+                  <div class="m-b-xs">
+                    {{$log->title}}
+                    <span class="text-muted block text-xs">
+                      {{$log->created_at->diffForHumans()}}
+                    </span>
+                  </div>
+                  <div class="m-b">
+                    <div>{{ $log->details }}</div>
+                    <div class="m-t-sm">
+                      <a href class="text-muted m-xs">{{$log->ip}}</a>
+                      <a href class="text-muted m-xs">{{$log->user_agent}}</a>
+                    </div>
+                  </div>
                 </div>
               </div>
+            @empty
+              
+            @endforelse
+        </div>
+        <div class="tab-pane animated fadeInDown streamline b-l p-v m-l-xs" id="feedback">
+            <div style="min-height: 450px;">
+                <div id="metrics-graph" style="height:400px" ></div>
             </div>
-          </div>
-        @empty
-            
-        @endforelse
+                <hr>
+            <div style="min-height: 450px;">
+              <div id="metrics-graph2" style="height:400px" ></div>
+            </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 <a md-ink-ripple class="md-btn md-fab md-fab-bottom-right pos-fix green"><i class="mdi-editor-mode-edit i-24"></i></a>
+@endsection
+@push('scripts')
+<script src="{{asset('js/chart.js')}}"></script>
 
-    @endsection
+<script type="text/javascript">
+  var options = {
+                    chart: {
+                        renderTo: '',
+                        type: 'column',
+                        borderWidth:0
+                    },
+                    title: {
+                        text: '',
+                    },
+                    xAxis: {
+                        categories: []
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Ratting'
+                        }
+                    },
+                    tooltip: {
+                        formatter: function() {
+                            return this.x+' Ratting for ' + this.series.name + ' is <b>'+ ChartJS.numberFormat(this.y, 2)+'</b>'
+                        }
+                    },
+                    legend: {
+                        layout: 'horizontal',
+                        borderWidth: 1,
+                        shadow: true
+                    },
+                    credits: {
+                        position: {
+                            align: 'left',
+                            x: 20
+                        },
+                        href: 'http://github.com/code-zone/survey-app',
+                        text: 'Mobile Software Learnabiity Index'
+                    },
+                    series: []
+                };
+                options.chart.renderTo = 'metrics-graph'
+                options.xAxis.categories = {!!json_encode($data['labels'])!!}
+                options.series = {!!json_encode($data['series'])!!}
+                chart = new ChartJS.Chart(options);
+                options.chart.renderTo = 'metrics-graph2'
+                options.series = {!! json_encode($data['series2']) !!}
+                options.title.text = 'Mobile Social Software Learnability Index Evaluation'
+                options.legend.enabled = false;
+                chart = new ChartJS.Chart(options);
+</script>
+@endpush

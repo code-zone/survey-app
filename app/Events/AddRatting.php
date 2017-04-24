@@ -11,7 +11,7 @@ class AddRatting
     use SerializesModels;
 
     /**
-     * Project model instance class.
+     * Project model instance.
      *
      * @var Project
      **/

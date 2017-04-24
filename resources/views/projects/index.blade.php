@@ -39,7 +39,7 @@
 						            <li>
 						            	<a href="{{ route('project.metrics.show', $project->id) }}" >
 						            		<i class="icon mdi-action-settings-voice i-20"></i>
-						            		Start Survey
+						            		View Survey
 						            	</a>
 						            </li>
 						            @is('Admin')
@@ -67,6 +67,11 @@
 						</div>
 					</div>
 				@endforeach
+				</div>
+				<div class="row">
+					<center>
+						<a href="{{ route('project.start_survey')}}" class="btn btn-indigo btn-lg indigo">Start Survey</a>
+					</center>
 				</div>
 			</div>
 		</div>

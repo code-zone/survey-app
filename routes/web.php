@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,15 +11,11 @@ use Illuminate\Http\Request;
 | contains the "web" middleware group. Now create something great!
 |
  */
-
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('demo', function (Request $request) {
-    return dd($request->server->all());
-});
-
+// Frontend Routes
+Route::get('/', 'SiteController@home');
+Route::get('contact', 'SiteController@contactUs');
 Auth::routes();
+// Backend Routes
 Route::resource('metrics', 'MetricsController');
 Route::resource('projects', 'ProjectsController');
 Route::resource('users', 'UsersController');
@@ -108,6 +103,13 @@ Route::get(
     'projects/{project}/metrics',
     [
         'as' => 'project.metrics.show',
+        'uses' => 'ProjectsController@showMetrics',
+    ]
+);
+Route::get(
+    'projects/start-survey',
+    [
+        'as' => 'project.start_survey',
         'uses' => 'ProjectsController@startSurvey',
     ]
 );

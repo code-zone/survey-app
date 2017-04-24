@@ -43,13 +43,16 @@ class HomeController extends Controller
         // Series 2
         $rate = [];
         foreach ($this->surveys->all() as $pr) {
-            $rate[] = $pr->ratting($user_id);
+            $rate['data'][] = $pr->ratting($user_id);
+            $rate['name'][] = $pr->project_name;
         }
         $data['series2'][] = [
-            'data' => $rate,
+            'data' => $rate['data'],
             'name' => 'Overall',
-            'type' => 'area',
+            'type' => 'areaspline',
         ];
+        $data['rates'] = $rate;
+
         return view('home', compact('data'));
     }
 }
