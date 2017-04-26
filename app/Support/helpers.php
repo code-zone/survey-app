@@ -14,16 +14,16 @@ if (!function_exists('ratting')) {
             return ['color' => 'danger-dk', 'rate' => 'Poor', 'bg' => '#f92718'];
         }
         switch ($value) {
-            case $value >= 80:
+            case $value >= 85.643:
                 return ['color' => 'success-dk', 'rate' => 'Excellent', 'bg' => '#3fa343'];
                 break;
-            case $value >= 60:
+            case $value >= 71.286:
                 return ['color' => 'primary-dk', 'rate' => 'Good', 'bg' => '#3345a8'];
                 break;
-            case $value >= 40:
+            case $value >= 56.929:
                 return ['color' => 'info-dk', 'rate' => 'Average', 'bg' => '#078bf4'];
                 break;
-            case $value >= 20:
+            case $value >= 42.57:
                 return ['color' => 'warning-dk', 'rate' => 'Fair', 'bg' => '#ecb100'];
                 break;
             default:

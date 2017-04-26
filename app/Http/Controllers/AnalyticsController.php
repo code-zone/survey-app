@@ -39,14 +39,30 @@ class AnalyticsController extends Controller
                 'data' => $score['data'],
             ];
         }
+        $ages = ['60' => 'Above 60 Years', '40' => '41 to 60 Years', '20' => '21 to 40 Years', '10' => 'Below 20 Years'];
+        foreach ($this->surveys->all() as $svy) {
+            $score = [];
+            foreach ($ages as $key => $group) {
+                $score['labels'][] = $group;
+                $score['data'][] = $svy->rattingByAge($key) / 57.572 * 100;
+            }
+            $data['series3'][] = [
+                    'name' => $svy->project_name,
+                    'data' => $score['data'],
+                ];
+        }
+        $data['agelabels'] = array_flatten($ages);
+
         // Series 2
         $rate = [];
-        foreach ($this->surveys->all() as $pr) {
-            $rate['data'][] = $pr->rattingByAge($age);
+        foreach (Project::all() as $pr) {
+            $per = $pr->rattingByAge($age) / 57.572 * 100;
+            $rate['data'][] = $per;
+            $rate['series'][] = [$pr->project_name, $per];
             $rate['name'][] = $pr->project_name;
         }
         $data['series2'][] = [
-            'data' => $rate['data'],
+            'data' => $rate['series'],
             'name' => 'Overall',
             'type' => 'pie',
         ];

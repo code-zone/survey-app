@@ -12,10 +12,11 @@
                                         <label class="sr-only" for="password">Age</label>
                                         <select name="age" class="select2">
                                             <optgroup label="Age Ranges">
-                                                <option value="10">10 to 20 Years</option>
-                                                <option value="20">21 to 40 Years</option>
-                                                <option value="40">41 to 60 Years</option>
-                                                <option value="60">60+ Years</option>   
+                                                <option value="">All Ages</option>
+                                                <option {{request('age') == 10 ? 'selected': ''}} value="10">Below 20 Years</option>
+                                                <option {{request('age') == 20 ? 'selected': ''}} value="20">21 to 40 Years</option>
+                                                <option {{request('age') == 40 ? 'selected': ''}} value="40">41 to 60 Years</option>
+                                                <option {{request('age') == 60 ? 'selected': ''}} value="60">60+ Years</option>   
                                             </optgroup>
                                         </select>
                                          {!! $errors->first('age', '<span class="help-block">:message</span>') !!}
@@ -25,12 +26,17 @@
                     <button type="submit" class="btn btn-primary">Filter</button>
                 </div>
             </form>
+            @if(!request('age'))
 			<div style="min-height: 450px;">
-				<div id="metrics-graph" style="height:400px" ></div>
+				<div id="metrics-graph3" style="height:400px" ></div>
 			</div>
+            @endif
             <hr>
             <div style="min-height: 450px;">
 
+                <div id="metrics-graph" style="height:400px" ></div>
+			</div>
+            <div style="min-height: 450px;">
                 <div id="metrics-graph2" style="height:400px" ></div>
 			</div>
             
@@ -43,7 +49,7 @@
             <div class="panel-heading">
                 <span class="font-bold">{{$survey}}</span>
                 @php
-                   $per = $data['rates']['data'][$key] / 57.572 * 100;
+                   $per = $data['rates']['data'][$key];
                    $rate = ratting($per);
                 @endphp
             </div>
@@ -76,10 +82,24 @@
 <script src="{{asset('js/chart.js')}}"></script>
 
 <script type="text/javascript">
+var myTheme = {}
+myTheme.colors = ["#3345a8", "#3fa343", "#078bf4", "#ecb100", "#f92718"]
+myTheme.chart = {
+                    backgroundColor: '#fff'
+                };
+myTheme.title = {
+                    style: {
+                        fontSize: '20px',
+                        fontFamily: '"Georgia", "Verdana", sans-serif',
+                        fontWeight: 'bold',
+                        color: '#000000'
+                    }
+}
   var options = {
                     chart: {
                         renderTo: '',
                         type: 'column',
+                        options3d:{}
                     },
                     title: {
                         text: '',
@@ -112,10 +132,33 @@
                     },
                     series: []
                 };
+                options.title.text = 'Overall Learnabilty based on Software\'s Metrics'
                 options.chart.renderTo = 'metrics-graph'
                 options.xAxis.categories = {!!json_encode($data['labels'])!!}
                 options.series = {!!json_encode($data['series'])!!}
                 chart = new ChartJS.Chart(options);
+                ChartJS.setOptions(myTheme)
+                @if(! request('age'))
+                tooltip = {
+                        formatter: function() {
+                            return this.x+' Ratting for ' + this.series.name + ' is <b>'+ ChartJS.numberFormat(this.y, 2)+' %</b>'
+                        }
+                    }
+                options.title.text = 'Distribution based on Age groups'
+                options.tooltip = tooltip
+                options.chart.renderTo = 'metrics-graph3'
+                options.chart.type = 'bar'
+                options.xAxis.categories = {!!json_encode($data['agelabels'])!!}
+                options.series = {!!json_encode($data['series3'])!!}
+                @endif
+                chart = new ChartJS.Chart(options);
+
+                tooltip = {
+                        formatter: function() {
+                            return 'Ratting for ' + this.point.name + ' is <b>'+ ChartJS.numberFormat(this.y, 2)+' %</b>'
+                        }
+                    }
+                options.tooltip = tooltip
                 options.chart.renderTo = 'metrics-graph2'
                 options.series = {!! json_encode($data['series2']) !!}
                 options.legend.enabled = false
@@ -123,6 +166,6 @@
                 chart = new ChartJS.Chart(options);
 </script>
         <script>
-           $('.select2').select2({width:"100%"})
+           $('.select2').select2()
         </script>
     @endpush

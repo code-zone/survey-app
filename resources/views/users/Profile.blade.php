@@ -31,7 +31,7 @@
             <i class="fa ui-icon fa-twitter"></i>
           </a>
           <a class="text-muted">
-            <i class="fa ui-icon fa-linkedin"></i>
+            <i class="fa ui-icon fa-whatsapp"></i>
           </a>
         </div>
       </div>
@@ -40,8 +40,9 @@
   <div class="col-sm-8">
     <div class="panel panel-card">
     @if(auth()->user()->self($user))
-      <form>
-        <textarea class="form-control no-border" rows="3" placeholder="Write something about you...">{{$user->about}}</textarea>
+      <form action="{{route('user.about', $user->id)}}" method="post">
+        {{csrf_field()}}
+        <textarea name="about" class="form-control no-border" rows="3" placeholder="Write something about you...">{{$user->about}}</textarea>
       <div class="lt p">
         <button class="btn btn-info pull-right btn-sm p-h font-bold">SAVE</button>
         <ul class="nav nav-pills nav-sm">
@@ -88,18 +89,16 @@
         </div>
         <div class="tab-pane animated fadeInDown streamline b-l p-v m-l-xs" id="feedback">
             <div style="min-height: 450px;">
-                <div id="metrics-graph" style="height:400px" ></div>
+                <div id="metrics-graph2" style="height:400px" ></div>
             </div>
-                <hr>
             <div style="min-height: 450px;">
-              <div id="metrics-graph2" style="height:400px" ></div>
+                <div id="metrics-graph" style="height:400px" ></div>
             </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<a md-ink-ripple class="md-btn md-fab md-fab-bottom-right pos-fix green"><i class="mdi-editor-mode-edit i-24"></i></a>
 @endsection
 @push('scripts')
 <script src="{{asset('js/chart.js')}}"></script>
@@ -124,7 +123,7 @@
                     },
                     tooltip: {
                         formatter: function() {
-                            return this.x+' Ratting for ' + this.series.name + ' is <b>'+ ChartJS.numberFormat(this.y, 2)+'</b>'
+                            return this.series.name +' Ratting for ' + this.x+ ' is <b>'+ ChartJS.numberFormat(this.y, 2)+' %</b>'
                         }
                     },
                     legend: {
@@ -147,9 +146,8 @@
                 options.series = {!!json_encode($data['series'])!!}
                 chart = new ChartJS.Chart(options);
                 options.chart.renderTo = 'metrics-graph2'
-                options.series = {!! json_encode($data['series2']) !!}
-                options.title.text = 'Mobile Social Software Learnability Index Evaluation'
-                options.legend.enabled = false;
+                options.xAxis.categories = {!!json_encode($data['labels'])!!}
+                options.series = {!!json_encode($data['series2'])!!}
                 chart = new ChartJS.Chart(options);
 </script>
 @endpush

@@ -29,7 +29,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = $this->users->all();
+        $users = $this->users->paginate();
 
         return view('users.users', compact('users'));
     }
@@ -92,13 +92,15 @@ class UsersController extends Controller
         // Series 2
         $rate = [];
         foreach ($this->surveys->all() as $pr) {
-            $rate[] = $pr->ratting($user->id);
+            $rate['data'][] = $pr->ratting($user->id) / 57.572 * 100;
+            $rate['name'][] = $pr->project_name;
         }
         $data['series2'][] = [
-            'data' => $rate,
+            'data' => $rate['data'],
             'name' => 'Overall',
-            'type' => 'areaspline',
+            'type' => 'column',
         ];
+        $data['rates'] = $rate;
 
         return view('users.Profile', compact('user', 'data'));
     }
@@ -194,6 +196,20 @@ class UsersController extends Controller
             $message = 'User was successfully unblocked';
         }
         session()->put('message', $message);
+
+        return back();
+    }
+
+    /**
+     * undocumented function summary.
+     *
+     * Undocumented function long description
+     *
+     * @param type var Description
+     **/
+    public function updateAbout(User $user)
+    {
+        $user->update(request()->only('about'));
 
         return back();
     }

@@ -5,10 +5,8 @@
 				<span class="card-title">{{$metric->metric_name}} Assessment</span>
 			</div>
 			<div class="card-body">
-			<p>
+				<h3>{{$project->project_name}} {{$metric->metric_name}}</h3>
 				<strong>Give us your feedback on {{$project->project_name}} based on {{$metric->metric_name}} Assessment</strong>
-
-			</p>
 				@if(session()->has('message'))
 					<div class="alert alert-success">
 						<p>

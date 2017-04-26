@@ -1,15 +1,5 @@
 @extends('layouts.master')
 	@section('content')
-		<div class="row">
-			<div class="col-sm-12">
-				@is('Admin')
-				<a href="{{url('projects/create')}}" class="btn btn-primary pull-right">
-					Create Survey
-				</a>
-				@endis
-			</div>		
-		</div>
-		<br>
 		<div class="card">
 			<div class="card-heading">
 				<span class="card-title">Surveys</span>
@@ -75,4 +65,7 @@
 				</div>
 			</div>
 		</div>
+		@is('Admin')
+		<a href="{{url('projects/create')}}" md-ink-ripple class="md-btn md-fab md-fab-bottom-right pos-fix green"><i class="mdi-content-add i-24"></i></a>
+		@endis
 	@endsection

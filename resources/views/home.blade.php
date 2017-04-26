@@ -18,45 +18,45 @@
 		</div>
 	</div>
     <div class"col-sm-12" style="min-height:550px !important;" >
-    <div class="card">
-        <div class="card-heading">
-            <span class="card-title">Mobile Social Software Learnability Index Evaluation</span>
-        </div>
-        <div class="card-body row">
-        @foreach($data['rates']['name'] as $key => $survey)
-        <div class="col-md-4">
-            <div class="panel no-border panel-primary">
-                <div class="panel-heading">
-                    <span class="font-bold">{{$survey}}</span>
-                    @php
-                    $per = $data['rates']['data'][$key] / 57.572 * 100;
-                    $rate = ratting($per);
-                    @endphp
-                </div>
-                <div class="panel-body">
-                    <center>
-                        <div ui-jp="easyPieChart" ui-options="{
-                                percent: {{$per}},
-                                lineWidth: 3,
-                                trackColor: '#f1f2f3',
-                                barColor: '{{$rate['bg']}}',
-                                scaleColor: '#f1f2f3',
-                                size: 160,
-                                lineCap: 'butt'
-                            }">
-                            <div>
-                                {{number_format($per)}}%
+        <div class="card">
+            <div class="card-heading">
+                <span class="card-title">Mobile Social Software Learnability Index Evaluation</span>
+            </div>
+            <div class="card-body row">
+            @foreach($data['rates']['name'] as $key => $survey)
+            <div class="col-md-4">
+                <div class="panel no-border panel-primary">
+                    <div class="panel-heading">
+                        <span class="font-bold">{{$survey}}</span>
+                        @php
+                        $per = $data['rates']['data'][$key] / 57.572 * 100;
+                        $rate = ratting($per);
+                        @endphp
+                    </div>
+                    <div class="panel-body">
+                        <center>
+                            <div ui-jp="easyPieChart" ui-options="{
+                                    percent: {{$per}},
+                                    lineWidth: 3,
+                                    trackColor: '#f1f2f3',
+                                    barColor: '{{$rate['bg']}}',
+                                    scaleColor: '#f1f2f3',
+                                    size: 160,
+                                    lineCap: 'butt'
+                                }">
+                                <div>
+                                    {{number_format($per)}}%
+                                </div>
                             </div>
+                        </center>
+                        <div class="text-center">
+                        <span class="text-{{$rate['color']}}"><strong>{{$rate['rate']}}</strong></span> 
                         </div>
-                    </center>
-                    <div class="text-center">
-                    <span class="text-{{$rate['color']}}"><strong>{{$rate['rate']}}</strong></span> 
                     </div>
                 </div>
             </div>
+            @endforeach
         </div>
-        @endforeach
-    </div>
     </div>
 </div>
 @endsection
@@ -64,6 +64,19 @@
 <script src="{{asset('js/chart.js')}}"></script>
 
 <script type="text/javascript">
+var myTheme = {}
+myTheme.colors = ["#3fa343", "#3345a8", "#078bf4", "#ecb100", "#f92718"]
+myTheme.chart = {
+                    backgroundColor: '#fff'
+                };
+myTheme.title = {
+                    style: {
+                        fontSize: '20px',
+                        fontFamily: '"Georgia", "Verdana", sans-serif',
+                        fontWeight: 'bold',
+                        color: '#000000'
+                    }
+}
   var options = {
                     chart: {
                         renderTo: '',
@@ -103,6 +116,7 @@
                 options.chart.renderTo = 'metrics-graph'
                 options.xAxis.categories = {!!json_encode($data['labels'])!!}
                 options.series = {!!json_encode($data['series'])!!}
+                ChartJS.setOptions(myTheme)
                 chart = new ChartJS.Chart(options);
                 options.chart.renderTo = 'metrics-graph2'
                 //options.series = {!! json_encode($data['series2']) !!}

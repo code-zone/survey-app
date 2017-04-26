@@ -62,12 +62,6 @@
                                         <i class="fa fa-phone form-control-feedback"></i>
                                         {!! $errors->first('phone_number', '<span class="help-block">:message</span>') !!}
                                     </div>
-                                    <div class="form-group has-feedback {{ $errors->has('password') ? ' has-error' : '' }}">
-                                        <label class="sr-only" for="password">Password</label>
-                                        <input type="password" class="form-control" placeholder="Enter Password" name="password">
-                                        <i class="fa fa-key form-control-feedback"></i>
-                                         {!! $errors->first('password', '<span class="help-block">:message</span>') !!}
-                                    </div>
                                     <div class="form-group {{ $errors->has('age') ? ' has-error' : '' }}">
                                         <label class="sr-only" for="password">Age</label>
                                         <select name="age" class="select2">
@@ -79,6 +73,12 @@
                                             </optgroup>
                                         </select>
                                          {!! $errors->first('age', '<span class="help-block">:message</span>') !!}
+                                    </div>
+                                    <div class="form-group has-feedback {{ $errors->has('password') ? ' has-error' : '' }}">
+                                        <label class="sr-only" for="password">Password</label>
+                                        <input type="password" class="form-control" placeholder="Enter Password" name="password">
+                                        <i class="fa fa-key form-control-feedback"></i>
+                                         {!! $errors->first('password', '<span class="help-block">:message</span>') !!}
                                     </div>
                                     <div class="form-group has-feedback {{ $errors->has('password') ? ' has-error' : '' }}">
                                         <label class="sr-only">Confirm Password</label>

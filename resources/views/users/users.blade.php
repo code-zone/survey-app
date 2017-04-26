@@ -25,13 +25,7 @@ function color_pane()
     return $colors[array_rand($colors, 1)];
 }//end color_pane()
 
-?>            <div class="row">
-                <div class="col-sm-12">
-                  <a href="{{ route('users.create') }}" class="btn btn-primary pull-right"><i class="mdi-content-create"></i> &nbsp; Add User</a>
-                  <br><br>
-                </div>
-
-              </div>
+?>
         <div class="card">
             <div class="card-heading">
                 <span class="card-title"> Users </span>
@@ -98,7 +92,11 @@ function color_pane()
                   </div>
                 </div>
                 @endforeach
+                <center>{!! $users->render() !!}</center>
               </div>
             </div>
         </div>
+        @is('Admin')
+		<a href="{{route('users.create')}}" md-ink-ripple class="md-btn md-fab md-fab-bottom-right pos-fix green"><i class="mdi-content-add i-24"></i></a>
+		@endis
     @endsection

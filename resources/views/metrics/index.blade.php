@@ -5,13 +5,6 @@
 				<span class="card-title"></span>
 			</div>
 			<div class="card-body">
-				<div class="row">
-					<a href="{{ route('metrics.create') }}" class="btn btn-primary pull-right">
-						<i class="icon mdi-content-add i-20"></i>
-						Create Metric
-					</a>
-				</div>
-				<br>
 				<table class="table table-striped" ui-jp="dataTable">
 					<thead>
 						<th>#</th>
@@ -127,4 +120,7 @@
                 </div>
             </div>
         </div>
+		@is('Admin')
+		<a href="{{route('metrics.create')}}" md-ink-ripple class="md-btn md-fab md-fab-bottom-right pos-fix green"><i class="mdi-content-add i-24"></i></a>
+		@endis
 	@endsection

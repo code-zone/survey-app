@@ -21,9 +21,34 @@ Route::resource('metrics', 'MetricsController');
 Route::resource('projects', 'ProjectsController');
 Route::resource('users', 'UsersController');
 Route::resource('settings', 'SettingsController');
-Route::get('analytics', ['middleware' => 'needsRole:Admin', 'uses' => 'AnalyticsController@index']);
-Route::get('users/block/{user}', ['as' => 'users.block', 'uses' => 'UsersController@block']);
-Route::get('users/unblock/{user}', ['as' => 'users.unblock', 'uses' => 'UsersController@unblock']);
+Route::get(
+    'analytics',
+    [
+        'middleware' => 'needsRole:Admin',
+        'uses' => 'AnalyticsController@index',
+    ]
+);
+Route::get(
+    'users/block/{user}',
+    [
+        'as' => 'users.block',
+        'uses' => 'UsersController@block',
+    ]
+);
+Route::post(
+    'users/about/{user}',
+    [
+         'as' => 'user.about',
+         'uses' => 'UsersController@updateAbout',
+    ]
+);
+Route::get(
+    'users/unblock/{user}',
+    [
+        'as' => 'users.unblock',
+        'uses' => 'UsersController@unblock',
+    ]
+);
 Route::post(
     'constraints/create/{metric}',
     [
