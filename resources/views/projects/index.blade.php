@@ -19,6 +19,7 @@
 							       		{{$project->project_name}}
 								   	</div>
 							</div>
+							@is('Admin')
 							<span class="dropdown">
 						  		<a md-ink-ripple class="md-btn md-raised md-fab pink m-r md-fab-offset pull-right" data-toggle="dropdown">
 						  			<span class="text-white">
@@ -32,7 +33,6 @@
 						            		View Survey
 						            	</a>
 						            </li>
-						            @is('Admin')
 						            <li>
 						            	<a href="{{ route('project.metrics.add', $project->id) }}" >
 						            		<i class="icon mdi-action-settings i-20"></i>
@@ -45,9 +45,9 @@
 						            		Edit
 						            	</a>
 						            </li>
-						            @endis
 						       	</ul>
 						  	</span>
+						  	@endis
 							<div class="p">
 							    <h3>{{$project->project_name}}</h3>
 							    <p>

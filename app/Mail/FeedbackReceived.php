@@ -36,7 +36,8 @@ class FeedbackReceived extends Mailable
     public function build()
     {
         $bulider = (new SimpleMessage())
-                    ->greeting('Hallo!')
+                    ->greeting('Hallo! MSSL Admin')
+                    ->line('The is a new user feedback')
                     ->line($this->data->get('message'))
                     ->salutation('From '.$this->data->get('name'));
 

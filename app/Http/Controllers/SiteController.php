@@ -60,7 +60,7 @@ class SiteController extends Controller
             ->send((new FeedbackSent($request))->subject('Your Feedback Has Been Received'));
             // Send User feedback to site admin
             resolve('Illuminate\Contracts\Mail\Mailer')
-            ->to(env('ADMIN_EMAIL', 'wizqydy@gmail.com'), env('ADMIN_NAME', 'The Weezqyd'))
+            ->to(env('ADMIN_EMAIL', 'mcanelson@gmail.com'), env('ADMIN_NAME', 'Nelson Masese'))
             ->send((new FeedbackReceived($request))->subject('New User Feedback'));
             $request->session()->flash('response', 'Your Feedback Has Been Received');
         } catch (\Swift_TransportException $e) {

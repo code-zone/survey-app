@@ -22,7 +22,6 @@
 								<ul class="list-icons">
 									<li><i class="fa fa-user pr-10"></i> {{$site->where('key', 'author')->first()->value}}</li>
 									<li><i class="fa fa-phone pr-10"></i> {{$site->where('key', 'phone')->first()->value}}</li>
-									<li><i class="fa fa-fax pr-10"></i> {{$site->where('key', 'secondary_phone')->first()->value}} </li>
 									<li><i class="fa fa-envelope-o pr-10"></i>{{$site->where('key', 'email')->first()->value}}</li>
 								</ul>
 							</div>
