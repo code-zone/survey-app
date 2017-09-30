@@ -27,7 +27,7 @@ class HomeController extends Controller
     {
         $data = [];
         $user = auth()->user();
-        $user_id = $user->hasRole('Admin') ? false : $user->id;
+        $user_id = false;
         foreach ($metrics->all() as $metric) {
             $score = [];
             foreach ($this->surveys->all() as $survey) {

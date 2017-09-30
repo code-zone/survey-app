@@ -15,6 +15,7 @@ class CreateConstraintsTable extends Migration
             $table->increments('id');
             $table->integer('metric_id')->unsigned();
             $table->string('constraint_name');
+            $table->integer('weight')->nullable();
             $table->timestamps();
 
             $table->foreign('metric_id')->references('id')->on('metrics')->onDelete('cascade');
