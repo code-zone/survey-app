@@ -13,7 +13,7 @@ use Iterator;
  *
  * @author Master Weez <wizqydy@gmail.com>
  *
- * @link https://github.com/code-zone/survey-app Git repository source
+ * @see https://github.com/code-zone/survey-app Git repository source
  */
 class URLGenerator implements Iterator
 {
@@ -69,7 +69,7 @@ class URLGenerator implements Iterator
     public function next()
     {
         $key = $this->key() + 1;
-        session()->put('url', $key);
+        session()->put('url_key', $key);
 
         return $this->valid() ? $this->current() : url('home');
     }
@@ -81,7 +81,7 @@ class URLGenerator implements Iterator
      **/
     public function key()
     {
-        return session()->get('url', $this->position);
+        return session()->get('url_key', $this->position);
     }
 
     /**
@@ -89,7 +89,7 @@ class URLGenerator implements Iterator
      **/
     public function rewind()
     {
-        session()->put('url', $this->position);
+        return session()->put('url_key', $this->position);
     }
 
     /**

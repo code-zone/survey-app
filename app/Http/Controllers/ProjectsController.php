@@ -60,6 +60,7 @@ class ProjectsController extends Controller
         if ($url->current() !== null) {
             return redirect($url->current());
         }
+
         return redirect('home');
     }
 
@@ -72,7 +73,7 @@ class ProjectsController extends Controller
      **/
     public function update(Project $project, Request $request)
     {
-        $this->validate($request, ['project_name' => 'required|unique:projects,project_name,' . $project->id]);
+        $this->validate($request, ['project_name' => 'required|unique:projects,project_name,'.$project->id]);
         $project->update($request->all());
         $this->uploadFile($request, $project);
 
@@ -138,7 +139,7 @@ class ProjectsController extends Controller
     public function showMetrics(Project $project)
     {
         $user = auth()->user();
-        $user_id = $user->hasRole('Admin') ? false : $user->id;
+        $user_id = false;
 
         return view('projects.rating', compact('project', 'user_id'));
     }
