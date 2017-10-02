@@ -162,6 +162,8 @@ class MetricsController extends Controller
         $survey = request()->get('project_id');
         Auth::user()->ratings()->where(['metric_id' => $metric->id, 'project_id' => $survey])->delete();
         foreach (request()->get('constraints') as $key => $value) {
+            $constraint = Constraint::findOrFail($key);
+            $rate = ($constraint->weight / $value) * 5;
             $metric->ratings()->create(['user_id' => Auth::user()->id, 'constraint_id' => $key, 'rating' => $value, 'project_id' => $survey]);
         }
         session()->flash('message', 'Thank You for your particpation in this survey, You feedback is highly appreciated');

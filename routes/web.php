@@ -23,9 +23,7 @@ Route::resource('users', 'UsersController');
 Route::resource('settings', 'SettingsController');
 Route::get(
     'analytics',
-    [
-        'middleware' => 'needsRole:Admin',
-        'uses' => 'AnalyticsController@index',
+    ['uses' => 'AnalyticsController@index',
     ]
 );
 Route::get(

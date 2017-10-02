@@ -16,7 +16,7 @@ class UsersController extends Controller
      */
     public function __construct(User $user, Project $survey, Metric $metrics)
     {
-        $this->middleware(['auth', 'needsRole:Admin'])->except(['show', 'editProfile', 'updateAbout', 'updateProfile']);
+        $this->middleware(['auth'])->except(['show', 'editProfile', 'updateAbout', 'updateProfile']);
         $this->users = $user;
         $this->metrics = $metrics;
         $this->surveys = $survey;

@@ -11,5 +11,5 @@ class Constraint extends Model
      *
      * @var string
      **/
-    protected $fillable = ['metric_id', 'constraint_name'];
+    protected $fillable = ['metric_id', 'constraint_name', 'weight'];
 }
