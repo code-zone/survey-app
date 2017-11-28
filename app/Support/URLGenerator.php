@@ -2,8 +2,9 @@
 
 namespace App\Support;
 
-use App\Entities\Project;
 use Iterator;
+use App\Entities\Project;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * URLGenerator class generates the urls for a survey. Starting from the first survey,
@@ -13,7 +14,7 @@ use Iterator;
  *
  * @author Master Weez <wizqydy@gmail.com>
  *
- * @link https://github.com/code-zone/survey-app Git repository source
+ * @see https://github.com/code-zone/survey-app Git repository source
  */
 class URLGenerator implements Iterator
 {
@@ -121,5 +122,15 @@ class URLGenerator implements Iterator
         });
 
         return $this;
+    }
+
+    /**
+     * Set projects.
+     *
+     * @param Collection $projects Project collections
+     **/
+    public function setProjects(Collection $projects)
+    {
+        $this->projects = $projects;
     }
 }
