@@ -60,7 +60,7 @@
 				</div>
 				<div class="row">
 					<center>
-						<a href="{{ route('project.start_survey')}}" class="btn btn-indigo btn-lg indigo">Start Survey</a>
+						<a href="#start-survey" data-toggle="modal" class="btn btn-indigo btn-lg indigo">Select Platforms</a>
 					</center>
 				</div>
 			</div>
@@ -69,3 +69,46 @@
 		<a href="{{url('projects/create')}}" md-ink-ripple class="md-btn md-fab md-fab-bottom-right pos-fix green"><i class="mdi-content-add i-24"></i></a>
 		@endis
 	@endsection
+	@section('modal')
+		<div class="modal fade" id="start-survey" data-backdrop="false">
+            <div id="ajax-modal" class="modal-dialog">
+                <div class="modal-content">
+                    <div class="panel panel-default">
+                    	<div class="panel-heading">
+                        <span class="card-title">Select Social Media Platforms To Take survey</span>
+                    </div>
+                    </div>
+                    <div class="modal-body panel-body">
+                       <form id="metric-score" action="{{ route('project.start_survey')}}" method="post">
+                       	{!!csrf_field()!!}
+							<table class="table">
+								@foreach($projects as $project)
+								<tr>
+									<td>
+										<label class="ui-switch bg-primary m-t-xs m-r">
+								          	<input type="checkbox" name="projects[]" value="{{$project->id}}">
+								          	<i></i>
+								        </label>
+									</td>
+									<td>
+										{{$project->project_name}}
+									</td>
+									<td>
+								        {{$project->details}}
+								   	</td>
+								</tr>
+								@endforeach
+							</table>
+							<div class="row">
+								<center>
+									<button type="submit" class="btn btn-indigo btn-lg indigo">
+										Start Survey
+									</button>
+								</center>
+							</div>
+                       </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endsection

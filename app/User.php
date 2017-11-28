@@ -3,11 +3,12 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
+use Silber\Bouncer\Database\HasRolesAndAbilities;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasRolesAndAbilities;
 
     /**
      * The attributes that are mass assignable.
@@ -88,7 +89,7 @@ class User extends Authenticatable
      *
      * @param type var Description
      **/
-    public function self(User $user)
+    public function self(self $user)
     {
         return $user->id === $this->id;
     }

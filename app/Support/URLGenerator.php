@@ -115,7 +115,8 @@ class URLGenerator implements Iterator
     public function build()
     {
         $this->url = [];
-        $this->projects->each(function ($project) {
+        $projects = session('projects') ?: $this->projects;
+        $projects->each(function ($project) {
             $project->metrics->each(function ($metric) {
                 $this->url[] = route('metric.constraints', [$metric->metric_id, $metric->project_id]);
             });

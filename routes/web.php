@@ -132,7 +132,7 @@ Route::get(
         'uses' => 'ProjectsController@showMetrics',
     ]
 );
-Route::get(
+Route::post(
     'project/start-survey',
     [
         'as' => 'project.start_survey',

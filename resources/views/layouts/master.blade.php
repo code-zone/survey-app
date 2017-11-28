@@ -171,6 +171,7 @@
 <script src="{{asset('libs/select2/select2.full.min.js')}}"></script>
 
 @stack('scripts')
+@yield('modal')
 
 </body>
 </html>

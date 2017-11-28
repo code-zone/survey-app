@@ -22,7 +22,7 @@
 							       		{{$metric->metric->metric_name}}
 								   	</div>
 							</div>
-							<a href="{{ route('metric.constraints',['metric' => $metric->metric->id, 'project' => $project->id]) }}" md-ink-ripple class="md-btn md-raised md-fab pink m-r md-fab-offset pull-right" >
+							<a href="#" md-ink-ripple class="md-btn md-raised md-fab pink m-r md-fab-offset pull-right" >
 						  			<span class="text-white">
 						  				{{number_format($metric->metric->score($project->id, $user_id),1)}}
 						  			</span>
@@ -31,13 +31,6 @@
 							    <h3>{{$metric->metric->metric_name}}</h3>
 							    <p>
 							        {{$metric->metric->details}}
-							   	</p>
-							   	<p>
-							   		<a href="{{ route('metric.constraints',[$metric->metric->id, $project->id]) }}" md-ink-ripple class="btn btn-primary pull-right">
-						  			<span class="">
-						  				Rate It &nbsp;
-						  			</span>
-						  		</a>
 							   	</p>
 							</div>
 						</div>

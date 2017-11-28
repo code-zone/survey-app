@@ -20,7 +20,6 @@ class MetricsController extends Controller
     {
         $this->middleware('auth');
         $this->metrics = $metrics;
-        $this->url = resolve('url.generator')->build();
     }
 
     /**
@@ -156,20 +155,24 @@ class MetricsController extends Controller
      *
      * @return Response
      **/
-    public function saveRatings(Metric $metric)
+    public function saveRatings(Metric $metric, Request $request)
     {
-        $this->validate(request(), ['constraints' => 'required|array']);
-        $survey = request()->get('project_id');
+        $this->validate($request, ['constraints' => 'required|array']);
+        $survey = $request->get('project_id');
         Auth::user()->ratings()->where(['metric_id' => $metric->id, 'project_id' => $survey])->delete();
-        foreach (request()->get('constraints') as $key => $value) {
+        foreach ($request->get('constraints') as $key => $value) {
             $constraint = Constraint::findOrFail($key);
             $rate = ($constraint->weight / $value) * 5;
             $metric->ratings()->create(['user_id' => Auth::user()->id, 'constraint_id' => $key, 'rating' => $value, 'project_id' => $survey]);
         }
         session()->flash('message', 'Thank You for your particpation in this survey, You feedback is highly appreciated');
-        $url = $this->url->next();
-        if (!$this->url->valid()) {
-            $this->url->rewind();
+        $projects = $request->session()->get('projects');
+        $generator = resolve('url.generator');
+        $generator->setProjects($projects);
+        $generator->build();
+        $url = $generator->next();
+        if (!$generator->valid()) {
+            $generator->rewind();
         }
         event(new AddRatting($metric, Project::find($survey)));
 

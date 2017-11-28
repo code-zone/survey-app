@@ -54,10 +54,18 @@ class ProjectsController extends Controller
      *
      * @return Response
      **/
-    public function startSurvey()
+    public function startSurvey(Request $request)
     {
-        $url = resolve('url.generator')->build();
-        if ($url->current() !== null) {
+        if (!$request->has('projects')) {
+            return back();
+        }
+        $request->session()->forget('url_key');
+        $projects = Project::whereIn('id', $request->projects)->get();
+        session(['projects' => $projects]);
+        $generator = resolve('url.generator');
+        $generator->setProjects($projects);
+        $url = $generator->build();
+        if (null !== $url->current()) {
             return redirect($url->current());
         }
 
