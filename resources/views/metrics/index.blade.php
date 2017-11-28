@@ -75,6 +75,11 @@
 					          <label>Constraint Name</label>
 					          {!!$errors->first('constraint_name', '<span class="help-block">:message</span>')!!}
 					        </div>
+					        <div class="md-form-group {{$errors->has('weight') ? 'has-error' : ''}}">
+					          <input class="md-input" name="weight" value="{{old('weight')}}">
+					          <label>Constraint Weight</label>
+					          {!!$errors->first('weight', '<span class="help-block">:message</span>')!!}
+					        </div>
 					        <div class="md-form-group">
 					        	<a data-dismiss="modal" class="btn btn-danger">Close</a>
 		          				<button class="btn btn-primary pull-right">
