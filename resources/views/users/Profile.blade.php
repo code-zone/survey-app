@@ -123,7 +123,7 @@
                     },
                     tooltip: {
                         formatter: function() {
-                            return this.series.name +' Ratting for ' + this.x+ ' is <b>'+ ChartJS.numberFormat(this.y, 2)+' %</b>'
+                            return this.series.name +' Ratting for ' + this.x+ ' is <b>'+ ChartJS.numberFormat(this.y, 2)+' /35</b>'
                         }
                     },
                     legend: {

@@ -6,7 +6,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Mobile Social Software Learnability Index</title>
-		<meta name="description" content="Worthy a Bootstrap-based, Responsive HTML5 Template">
+		<meta name="description" content="Mobile Social Software Learnability Index">
 		<meta name="author" content="htmlcoder.me">
 
 		<!-- Mobile Meta -->

@@ -12,12 +12,10 @@ class CreateRatingsTable extends Migration
     public function up()
     {
         Schema::create('ratings', function (Blueprint $table) {
-            $table->increments('id');
             $table->integer('constraint_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('metric_id')->unsigned();
             $table->integer('rating');
-            $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('constraint_id')->references('id')->on('constraints')->onDelete('cascade');
