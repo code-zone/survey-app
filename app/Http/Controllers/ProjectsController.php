@@ -59,7 +59,7 @@ class ProjectsController extends Controller
         if (!$request->has('projects')) {
             return back();
         }
-        $request->session()->forget('url_key');
+        $request->session()->forget('url_key', 'projects');
         $projects = Project::whereIn('id', $request->projects)->get();
         session(['projects' => $projects]);
         $generator = resolve('url.generator');

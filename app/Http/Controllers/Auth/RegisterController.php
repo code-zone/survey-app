@@ -37,7 +37,7 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
-//end __construct()
+    //end __construct()
 
     /**
      * Get a validator for an incoming registration request.
@@ -60,7 +60,7 @@ class RegisterController extends Controller
         );
     }
 
-//end validator()
+    //end validator()
 
     /**
      * Create a new user instance after a valid registration.
@@ -80,10 +80,10 @@ class RegisterController extends Controller
              'password' => $data['password'],
             ]
         );
-        $user->attachRole(resolve('defender')->findRole('Respondent'));
+        $user->assign('Respondent');
 
         return $user;
     }
 
-//end create()
+    //end create()
 }//end class
